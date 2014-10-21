@@ -1,0 +1,174 @@
+CREATE TABLE condominio (
+  cnpj VARCHAR(30) NOT NULL,
+  nomeCondominio VARCHAR(100) NULL,
+  enderecoCondominio VARCHAR(100) NULL,
+  numeroCondominio VARCHAR(10) NULL,
+  bairroCondominio VARCHAR(30) NULL,
+  cepCondominio VARCHAR(20) NULL,
+  cidadeCondominio VARCHAR(30) NULL,
+  ufCondominio VARCHAR(8) NULL,
+  PRIMARY KEY(cnpj)
+);
+
+CREATE TABLE visitante (
+  codVisitante INTEGER NOT NULL AUTO_INCREMENT,
+  rgVisitante VARCHAR(20) NULL,
+  nomeVisitante VARCHAR(35) NULL,
+  PRIMARY KEY(codVisitante)
+);
+
+CREATE TABLE funcionarios (
+  codFuncionario INTEGER NOT NULL AUTO_INCREMENT,
+  cnpj VARCHAR(30) NOT NULL,
+  cpfFuncionario VARCHAR(20) NOT NULL,
+  cargoFuncionario VARCHAR(30) NULL,
+  nascionalidadeFunc VARCHAR(30) NULL,
+  dataNascFunc VARCHAR(20) NULL,
+  naturalidadeFunc VARCHAR(20) NULL,
+  rgFuncionario VARCHAR(20) NULL,
+  nomeFunc VARCHAR(30) NULL,
+  loginFunc VARCHAR(20) NULL,
+  senhaFunc VARCHAR(20) NULL,
+  cnh VARCHAR(30) NULL,
+  PRIMARY KEY(codFuncionario),
+  FOREIGN KEY(cnpj)
+    REFERENCES condominio(cnpj)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION
+);
+
+CREATE TABLE enderecoFunc (
+  codEndereco INTEGER NOT NULL AUTO_INCREMENT,
+  codFuncionario INTEGER NOT NULL,
+  enderecoFunc VARCHAR(50) NULL,
+  cepFunc VARCHAR(15) NULL,
+  cidadeFunc VARCHAR(50) NULL,
+  bairroFunc VARCHAR(25) NULL,
+  estadoFunc VARCHAR(30) NULL,
+  telefone1 VARCHAR(25) NULL,
+  telefone2 VARCHAR(25) NULL,
+  PRIMARY KEY(codEndereco),
+  FOREIGN KEY(codFuncionario)
+    REFERENCES funcionarios(codFuncionario)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION
+);
+
+CREATE TABLE apartamentos (
+  codApartamento INTEGER NOT NULL AUTO_INCREMENT,
+  cnpj VARCHAR(30) NOT NULL,
+  numeroApartamento VARCHAR(10) NULL,
+  blocoApartamento VARCHAR(10) NULL,
+  PRIMARY KEY(codApartamento),
+  FOREIGN KEY(cnpj)
+    REFERENCES condominio(cnpj)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION
+);
+
+CREATE TABLE regVisitas (
+  codVisita INTEGER NOT NULL AUTO_INCREMENT,
+  codVisitante INTEGER NOT NULL,
+  codApartamento INTEGER NOT NULL,
+  dataVisita VARCHAR(20) NULL,
+  horaEntrada VARCHAR(20) NULL,
+  dataSaida VARCHAR(20) NULL,
+  horaSaida VARCHAR(20) NULL,
+  PRIMARY KEY(codVisita),
+  FOREIGN KEY(codVisitante)
+    REFERENCES visitante(codVisitante)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION,
+  FOREIGN KEY(codApartamento)
+    REFERENCES apartamentos(codApartamento)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION
+);
+
+CREATE TABLE morador (
+  codMorador INTEGER NOT NULL AUTO_INCREMENT,
+  codFuncionario INTEGER NOT NULL,
+  codApartamento INTEGER NOT NULL,
+  cpfMorador VARCHAR(20) NULL,
+  nomeMorador VARCHAR(20) NULL,
+  nacionalidadeMorador VARCHAR(20) NULL,
+  naturalidadeMorador VARCHAR(20) NULL,
+  dataNascMorador VARCHAR(20) NULL,
+  loginMorador VARCHAR(20) NULL,
+  senhaMorador VARCHAR(20) NULL,
+  PRIMARY KEY(codMorador),
+  FOREIGN KEY(codFuncionario)
+    REFERENCES funcionarios(codFuncionario)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION,
+  FOREIGN KEY(codApartamento)
+    REFERENCES apartamentos(codApartamento)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION
+);
+
+CREATE TABLE registroChamado (
+  codChamado INTEGER NOT NULL AUTO_INCREMENT,
+  codMorador INTEGER NOT NULL,
+  codFuncionario INTEGER NOT NULL,
+  dataChamado VARCHAR(20) NULL,
+  horaChamado VARCHAR(20) NULL,
+  descChamado TEXT NULL,
+  destinoChamado VARCHAR(20) NULL,
+  PRIMARY KEY(codChamado),
+  FOREIGN KEY(codFuncionario)
+    REFERENCES funcionarios(codFuncionario)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION,
+  FOREIGN KEY(codMorador)
+    REFERENCES morador(codMorador)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION
+);
+
+CREATE TABLE dependentes (
+  codDependente INTEGER NOT NULL AUTO_INCREMENT,
+  codMorador INTEGER NOT NULL,
+  rgDependente VARCHAR(20) NULL,
+  cpfDependete VARCHAR(20) NULL,
+  nomeDependente VARCHAR(30) NULL,
+  dataNacDep VARCHAR(15) NULL,
+  nacionDependente VARCHAR(15) NULL,
+  naturDependente VARCHAR(35) NULL,
+  PRIMARY KEY(codDependente),
+  FOREIGN KEY(codMorador)
+    REFERENCES morador(codMorador)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION
+);
+
+CREATE TABLE veiculo (
+  codVeiculo INTEGER NOT NULL AUTO_INCREMENT,
+  placaVeiculo VARCHAR(15) NOT NULL,
+  codVisitante INTEGER NOT NULL,
+  codMorador INTEGER NOT NULL,
+  codDependente INTEGER NOT NULL,
+  codFuncionario INTEGER NOT NULL,
+  marcaVeiculo VARCHAR(15) NULL,
+  modeloVeiculo VARCHAR(15) NULL,
+  corVeiculo VARCHAR(15) NULL,
+  anoVeiculo INTEGER NULL,
+  PRIMARY KEY(codVeiculo, placaVeiculo),
+  FOREIGN KEY(codMorador)
+    REFERENCES morador(codMorador)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION,
+  FOREIGN KEY(codDependente)
+    REFERENCES dependentes(codDependente)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION,
+  FOREIGN KEY(codFuncionario)
+    REFERENCES funcionarios(codFuncionario)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION,
+  FOREIGN KEY(codVisitante)
+    REFERENCES visitante(codVisitante)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION
+);
+

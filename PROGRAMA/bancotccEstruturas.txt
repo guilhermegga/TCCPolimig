@@ -30,26 +30,17 @@ CREATE TABLE funcionarios (
   loginFunc VARCHAR(20) NULL,
   senhaFunc VARCHAR(20) NULL,
   cnh VARCHAR(30) NULL,
+  estadoFunc VARCHAR(30) NULL,
+  cidadeFunc VARCHAR(30) NULL,
+  bairroFunc VARCHAR(30) NULL,
+  emailFunc VARCHAR(30) NULL,
+  enderecoFunc VARCHAR(50) NULL,
+  telefone1 VARCHAR(30) NULL,
+  telefone2 VARCHAR(30) NULL,
+  cepFunc VARCHAR(30) NULL,
   PRIMARY KEY(codFuncionario),
   FOREIGN KEY(cnpj)
     REFERENCES condominio(cnpj)
-      ON DELETE NO ACTION
-      ON UPDATE NO ACTION
-);
-
-CREATE TABLE enderecoFunc (
-  codEndereco INTEGER NOT NULL AUTO_INCREMENT,
-  codFuncionario INTEGER NOT NULL,
-  enderecoFunc VARCHAR(50) NULL,
-  cepFunc VARCHAR(15) NULL,
-  cidadeFunc VARCHAR(50) NULL,
-  bairroFunc VARCHAR(25) NULL,
-  estadoFunc VARCHAR(30) NULL,
-  telefone1 VARCHAR(25) NULL,
-  telefone2 VARCHAR(25) NULL,
-  PRIMARY KEY(codEndereco),
-  FOREIGN KEY(codFuncionario)
-    REFERENCES funcionarios(codFuncionario)
       ON DELETE NO ACTION
       ON UPDATE NO ACTION
 );

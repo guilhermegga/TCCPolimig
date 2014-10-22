@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 21-Out-2014 às 13:25
+-- Generation Time: 21-Out-2014 às 15:04
 -- Versão do servidor: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -75,26 +75,6 @@ CREATE TABLE IF NOT EXISTS `dependentes` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `enderecofunc`
---
-
-CREATE TABLE IF NOT EXISTS `enderecofunc` (
-  `codEndereco` int(11) NOT NULL AUTO_INCREMENT,
-  `codFuncionario` int(11) NOT NULL,
-  `enderecoFunc` varchar(50) DEFAULT NULL,
-  `cepFunc` varchar(15) DEFAULT NULL,
-  `cidadeFunc` varchar(50) DEFAULT NULL,
-  `bairroFunc` varchar(25) DEFAULT NULL,
-  `estadoFunc` varchar(30) DEFAULT NULL,
-  `telefone1` varchar(25) DEFAULT NULL,
-  `telefone2` varchar(25) DEFAULT NULL,
-  PRIMARY KEY (`codEndereco`),
-  KEY `codFuncionario` (`codFuncionario`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
 -- Estrutura da tabela `funcionarios`
 --
 
@@ -111,6 +91,14 @@ CREATE TABLE IF NOT EXISTS `funcionarios` (
   `loginFunc` varchar(20) DEFAULT NULL,
   `senhaFunc` varchar(20) DEFAULT NULL,
   `cnh` varchar(30) DEFAULT NULL,
+  `estadoFunc` varchar(30) DEFAULT NULL,
+  `cidadeFunc` varchar(30) DEFAULT NULL,
+  `bairroFunc` varchar(30) DEFAULT NULL,
+  `emailFunc` varchar(30) DEFAULT NULL,
+  `enderecoFunc` varchar(50) DEFAULT NULL,
+  `telefone1` varchar(30) DEFAULT NULL,
+  `telefone2` varchar(30) DEFAULT NULL,
+  `cepFunc` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`codFuncionario`),
   KEY `cnpj` (`cnpj`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
@@ -227,12 +215,6 @@ ALTER TABLE `apartamentos`
 --
 ALTER TABLE `dependentes`
   ADD CONSTRAINT `dependentes_ibfk_1` FOREIGN KEY (`codMorador`) REFERENCES `morador` (`codMorador`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Limitadores para a tabela `enderecofunc`
---
-ALTER TABLE `enderecofunc`
-  ADD CONSTRAINT `enderecofunc_ibfk_1` FOREIGN KEY (`codFuncionario`) REFERENCES `funcionarios` (`codFuncionario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Limitadores para a tabela `funcionarios`

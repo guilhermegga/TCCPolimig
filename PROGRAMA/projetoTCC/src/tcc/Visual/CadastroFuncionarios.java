@@ -5,21 +5,26 @@
  */
 package tcc.visual;
 
+import javax.swing.JOptionPane;
+import tcc.Controller.Conexao;
+import tcc.Controller.FuncionarioDAO;
+import tcc.Model.Funcionario;
+
 /**
  *
  * @author rodrigo
  */
 public class CadastroFuncionarios extends javax.swing.JInternalFrame {
-      
+
     /**
      * Creates new form CadastroFuncionarios
      */
     public CadastroFuncionarios() {
         initComponents();
-        
-        setRootPaneCheckingEnabled(false);  
-	javax.swing.plaf.InternalFrameUI ui = this.getUI();  
-	((javax.swing.plaf.basic.BasicInternalFrameUI)ui).setNorthPane(null); 
+
+        setRootPaneCheckingEnabled(false);
+        javax.swing.plaf.InternalFrameUI ui = this.getUI();
+        ((javax.swing.plaf.basic.BasicInternalFrameUI) ui).setNorthPane(null);
     }
 
     /**
@@ -41,8 +46,8 @@ public class CadastroFuncionarios extends javax.swing.JInternalFrame {
         TxtNomeFunc = new javax.swing.JTextField();
         TxtCpf = new javax.swing.JTextField();
         TxtRg = new javax.swing.JTextField();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        txtCNH = new javax.swing.JTextField();
+        txtDataNasc = new javax.swing.JTextField();
         TxtNaturalidade = new javax.swing.JTextField();
         JbCidade = new javax.swing.JLabel();
         TxtCep = new javax.swing.JTextField();
@@ -56,7 +61,6 @@ public class CadastroFuncionarios extends javax.swing.JInternalFrame {
         TxtEndereco = new javax.swing.JTextField();
         JbNumero = new javax.swing.JLabel();
         TxtNumero = new javax.swing.JTextField();
-        CbDependetes = new javax.swing.JCheckBox();
         LbTelefone = new javax.swing.JLabel();
         LbCelular = new javax.swing.JLabel();
         TxtMaskTelefone = new javax.swing.JFormattedTextField();
@@ -103,68 +107,63 @@ public class CadastroFuncionarios extends javax.swing.JInternalFrame {
         JbNaturalidade.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         JbNaturalidade.setText("Naturalidade:");
         getContentPane().add(JbNaturalidade);
-        JbNaturalidade.setBounds(395, 150, 107, 30);
+        JbNaturalidade.setBounds(370, 150, 107, 30);
         getContentPane().add(TxtNomeFunc);
-        TxtNomeFunc.setBounds(175, 50, 594, 27);
+        TxtNomeFunc.setBounds(180, 60, 594, 20);
         getContentPane().add(TxtCpf);
-        TxtCpf.setBounds(310, 100, 201, 27);
+        TxtCpf.setBounds(310, 100, 201, 20);
         getContentPane().add(TxtRg);
-        TxtRg.setBounds(60, 100, 185, 27);
-        getContentPane().add(jTextField1);
-        jTextField1.setBounds(568, 100, 200, 27);
-        getContentPane().add(jTextField2);
-        jTextField2.setBounds(195, 150, 163, 27);
+        TxtRg.setBounds(60, 100, 185, 20);
+        getContentPane().add(txtCNH);
+        txtCNH.setBounds(568, 100, 200, 20);
+        getContentPane().add(txtDataNasc);
+        txtDataNasc.setBounds(195, 150, 163, 20);
         getContentPane().add(TxtNaturalidade);
-        TxtNaturalidade.setBounds(505, 150, 263, 27);
+        TxtNaturalidade.setBounds(480, 150, 263, 20);
 
         JbCidade.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         JbCidade.setText("Cidade:");
         getContentPane().add(JbCidade);
         JbCidade.setBounds(313, 200, 62, 30);
         getContentPane().add(TxtCep);
-        TxtCep.setBounds(441, 250, 216, 27);
+        TxtCep.setBounds(441, 250, 216, 20);
 
         JbCpf.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         JbCpf.setText("CEP:");
         getContentPane().add(JbCpf);
         JbCpf.setBounds(387, 250, 42, 30);
         getContentPane().add(TxtCidade);
-        TxtCidade.setBounds(380, 200, 390, 27);
+        TxtCidade.setBounds(380, 200, 390, 20);
 
         JbEstado.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         JbEstado.setText("Estado:");
         getContentPane().add(JbEstado);
         JbEstado.setBounds(21, 205, 61, 22);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione o estado:", "Minas Gerais", "São Paulo", "Rio de Janeiro", "Parana", " " }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione o estado:", "MG", "SP", "RJ", " " }));
         getContentPane().add(jComboBox1);
-        jComboBox1.setBounds(90, 200, 178, 27);
+        jComboBox1.setBounds(90, 200, 178, 20);
 
         JbBairro.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         JbBairro.setText("Bairro:");
         getContentPane().add(JbBairro);
         JbBairro.setBounds(21, 255, 53, 22);
         getContentPane().add(TxtBairro);
-        TxtBairro.setBounds(86, 250, 289, 27);
+        TxtBairro.setBounds(86, 250, 289, 20);
 
         JbEndereco.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         JbEndereco.setText("Endereço:");
         getContentPane().add(JbEndereco);
         JbEndereco.setBounds(20, 305, 82, 22);
         getContentPane().add(TxtEndereco);
-        TxtEndereco.setBounds(110, 300, 463, 27);
+        TxtEndereco.setBounds(110, 300, 463, 20);
 
         JbNumero.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         JbNumero.setText("Numero:");
         getContentPane().add(JbNumero);
         JbNumero.setBounds(580, 305, 68, 22);
         getContentPane().add(TxtNumero);
-        TxtNumero.setBounds(650, 300, 116, 27);
-
-        CbDependetes.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        CbDependetes.setText("Dependentes");
-        getContentPane().add(CbDependetes);
-        CbDependetes.setBounds(630, 400, 140, 26);
+        TxtNumero.setBounds(650, 300, 116, 20);
 
         LbTelefone.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         LbTelefone.setText("Telefone:");
@@ -176,14 +175,19 @@ public class CadastroFuncionarios extends javax.swing.JInternalFrame {
         getContentPane().add(LbCelular);
         LbCelular.setBounds(330, 405, 80, 22);
         getContentPane().add(TxtMaskTelefone);
-        TxtMaskTelefone.setBounds(100, 400, 160, 27);
+        TxtMaskTelefone.setBounds(100, 400, 160, 20);
         getContentPane().add(TxtMaskCelular);
-        TxtMaskCelular.setBounds(400, 400, 160, 27);
+        TxtMaskCelular.setBounds(400, 400, 160, 20);
 
         BtCancelar.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         BtCancelar.setText("Cancelar");
+        BtCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtCancelarActionPerformed(evt);
+            }
+        });
         getContentPane().add(BtCancelar);
-        BtCancelar.setBounds(100, 470, 130, 34);
+        BtCancelar.setBounds(100, 470, 130, 31);
 
         BtSalvar.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         BtSalvar.setText("Salvar");
@@ -193,29 +197,77 @@ public class CadastroFuncionarios extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(BtSalvar);
-        BtSalvar.setBounds(540, 470, 130, 34);
+        BtSalvar.setBounds(540, 470, 130, 31);
 
         LbEmail.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         LbEmail.setText("E-mail:");
         getContentPane().add(LbEmail);
         LbEmail.setBounds(20, 355, 70, 22);
         getContentPane().add(TxtEmail);
-        TxtEmail.setBounds(80, 350, 500, 27);
+        TxtEmail.setBounds(80, 350, 500, 20);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtSalvarActionPerformed
-        // TODO add your handling code here:
-        
-      
+
+        Funcionario func = new Funcionario();
+        func.codCondomin = 1;
+        func.codCargo = 3;
+        func.nomeFuncuinario = TxtNomeFunc.getText();
+        func.rgFuncionario = TxtRg.getText();
+        func.cpfFuncionario = TxtCpf.getText();
+        func.cnh = txtCNH.getText();
+        func.dataNascFunc = txtDataNasc.getText();
+        func.naturalidadeFunc = TxtNaturalidade.getText();
+        func.estadoFunc = jComboBox1.getSelectedItem().toString();
+        func.cidadeFunc = TxtCidade.getText();
+        func.bairroFunc = TxtBairro.getText();
+        func.cepFunc = TxtCep.getText();
+        func.enderecofunc = TxtEndereco.getText();
+        func.emailFunc = TxtEmail.getText();
+        func.tel1Func = TxtMaskTelefone.getText();
+        func.tel2Func = TxtMaskCelular.getText();
+        func.loginFuncionario = "admin";
+        func.senhaFuncionario = "admin";
+        func.nascionalidadeFunc = "basileira";
+
+        try {
+            Conexao coon = new Conexao();
+            FuncionarioDAO funcDAO = new FuncionarioDAO(coon.getConexao());
+            funcDAO.cadastrarfuncionario(func);
+            JOptionPane.showMessageDialog(null, "salvo com sucesso!");
+
+        } catch (Exception e) {
+        }
+
+        TxtNomeFunc.setText(null);
+        TxtRg.setText(null);
+        TxtCpf.setText(null);
+        txtCNH.setText(null);
+        txtDataNasc.setText(null);
+        TxtNaturalidade.setText(null);
+        jComboBox1.setSelectedItem(0);
+        TxtCidade.setText(null);
+        TxtBairro.setText(null);
+        TxtCep.setText(null);
+        TxtEndereco.setText(null);
+        TxtEmail.setText(null);
+        TxtMaskTelefone.setText(null);
+        TxtMaskCelular.setText(null);
+
+
     }//GEN-LAST:event_BtSalvarActionPerformed
+
+    private void BtCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtCancelarActionPerformed
+        this.dispose();
+
+    }//GEN-LAST:event_BtCancelarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtCancelar;
     private javax.swing.JButton BtSalvar;
-    private javax.swing.JCheckBox CbDependetes;
     private javax.swing.JLabel JbBairro;
     private javax.swing.JLabel JbCidade;
     private javax.swing.JLabel JbCpf;
@@ -243,9 +295,9 @@ public class CadastroFuncionarios extends javax.swing.JInternalFrame {
     private javax.swing.JTextField TxtRg;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel jbCpf;
     private javax.swing.JLabel jbRg;
+    private javax.swing.JTextField txtCNH;
+    private javax.swing.JTextField txtDataNasc;
     // End of variables declaration//GEN-END:variables
 }

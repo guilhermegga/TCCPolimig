@@ -5,19 +5,27 @@ package tcc.Model;
  */
 public class Funcionario {
 
-   public int codFuncionario;
-   public String cpf;
-   public String cargo;
-   public String nascioFunc;
-   public String naturalFunc;
-   public String rgFuncionario;
-   public String nomeFunc;
-   public String loginFunc;
-   public String senhaFunc;
-   public String enderecoFunc;
-   public String cnhFunc;
-   public String cnpjFK;
+    public int codFuncionario;
+    public int codCargo;
+    public int codCondomin;
+    public String cpfFuncionario;
+    public String nascionalidadeFunc;
+    public String dataNascFunc;
+    public String naturalidadeFunc;
+    public String rgFuncionario;
+    public String nomeFuncuinario;
+    public String loginFuncionario;
+    public String senhaFuncionario;
+    public String cnh;
+    public String estadoFunc;
+    public String cidadeFunc;
+    public String bairroFunc;
+    public String emailFunc;
+    public String enderecofunc;
+    public String tel1Func;
+    public String tel2Func;
+    public String cepFunc;
+    
+    
 
-   
-   
 }

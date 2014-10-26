@@ -5,9 +5,8 @@ package tcc.Model;
  */
 public class RegVisitas {
 
-    public int codVisitante;
-    public int codApartamentoFK;
     public int codVisitanteFK;
+    public int codApartamentoFK;
     public String dataVisita;
     public String horaVisita;
     public String dataSaida;

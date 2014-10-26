@@ -12,5 +12,6 @@ public class RegistroCham {
     public String horaChamado;
     public String descrChamado;
     public String destChamado;
+    public String statusChamado;
     
 }

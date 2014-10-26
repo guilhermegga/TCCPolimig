@@ -5,19 +5,25 @@
  */
 package tcc.visual;
 
+import javax.swing.JOptionPane;
+import tcc.Controller.CondominioDAO;
+import tcc.Controller.Conexao;
+import tcc.Model.Condominio;
+
 /**
  *
  * @author rodrigo
  */
 public class TelaCondominio extends javax.swing.JInternalFrame {
+
     /**
      * Creates new form TelaCondominio
      */
     public TelaCondominio() {
         initComponents();
-        setRootPaneCheckingEnabled(false);  
-	javax.swing.plaf.InternalFrameUI ui = this.getUI();  
-	((javax.swing.plaf.basic.BasicInternalFrameUI)ui).setNorthPane(null); 
+        setRootPaneCheckingEnabled(false);
+        javax.swing.plaf.InternalFrameUI ui = this.getUI();
+        ((javax.swing.plaf.basic.BasicInternalFrameUI) ui).setNorthPane(null);
     }
 
     /**
@@ -88,7 +94,7 @@ public class TelaCondominio extends javax.swing.JInternalFrame {
         jLabel9.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel9.setText("Telefone:");
 
-        CbEstado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione o estado:", "Minas Gerais", "São Paulo", "Rio De Janeiro", "Rio Grande Do Sul", "Parana", "Amazonas" }));
+        CbEstado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione o estado:", "MG", "SP", "RJ", "RS" }));
 
         LbRecebeLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagens/logo.png"))); // NOI18N
         LbRecebeLogo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -101,13 +107,22 @@ public class TelaCondominio extends javax.swing.JInternalFrame {
 
         BtCancelar.setFont(new java.awt.Font("Arial", 1, 15)); // NOI18N
         BtCancelar.setText("Cancelar");
+        BtCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtCancelarActionPerformed(evt);
+            }
+        });
 
         BtSalvar.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         BtSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/imagens/Salvar.png"))); // NOI18N
         BtSalvar.setText("Salvar");
         BtSalvar.setBorder(null);
         BtSalvar.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        BtSalvar.setOpaque(true);
+        BtSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtSalvarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -232,6 +247,39 @@ public class TelaCondominio extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void BtSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtSalvarActionPerformed
+        Conexao conn = new Conexao();
+        Condominio condo = new Condominio();
+
+        condo.cnpj = TxtCnpj.getText();
+        condo.nomeCondominio = TxtCondominio.getText();
+        condo.enderecoCondom = TxtEndereco.getText();
+        condo.numeroCondom = TxtNumero.getText();
+        condo.bairroCondo = TxtBairro.getText();
+        condo.cepCondom = TxtCep.getText();
+        condo.cidadeCondomin = TxtCidade.getText();
+        condo.ufCondomin = CbEstado.getSelectedItem().toString();
+
+        try {
+
+            CondominioDAO condDAO = new CondominioDAO(conn.getConexao());
+            condDAO.cadastrarCondomin(condo);
+
+            JOptionPane.showMessageDialog(null, "Salco com sucesso!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+
+        }
+
+        
+        
+
+    }//GEN-LAST:event_BtSalvarActionPerformed
+
+    private void BtCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtCancelarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_BtCancelarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

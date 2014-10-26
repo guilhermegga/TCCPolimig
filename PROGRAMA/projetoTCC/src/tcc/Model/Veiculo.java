@@ -4,7 +4,7 @@ package tcc.Model;
  * @author Guilherme Garcia
  */
 public class Veiculo {
-
+    public int codVeiculo;
     public String placaVeiculo;
     public int codVisitanteFK;
     public int codFuncionarioFK;

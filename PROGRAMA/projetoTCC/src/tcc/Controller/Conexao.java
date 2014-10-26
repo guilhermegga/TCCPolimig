@@ -11,7 +11,7 @@ public class Conexao {
     
     public Connection getConexao()throws SQLException{
         
-        return DriverManager.getConnection("jdbc:mysql://localhost/banco","root","");
+        return DriverManager.getConnection("jdbc:mysql://localhost/bancotcc","root","");
     }
 
 }

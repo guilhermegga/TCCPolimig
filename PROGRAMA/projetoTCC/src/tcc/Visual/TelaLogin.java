@@ -1,5 +1,9 @@
 
 package tcc.visual;
+
+import tcc.Controller.Conexao;
+
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -82,11 +86,11 @@ public class TelaLogin extends javax.swing.JFrame {
                             .addComponent(TxtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(TxtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(17, 17, 17)))
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
-                .addGap(143, 143, 143))
+                .addGap(140, 140, 140))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -110,7 +114,7 @@ public class TelaLogin extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(BtSair)
                             .addComponent(Btlogar))
-                        .addGap(46, 46, 46))))
+                        .addGap(58, 58, 58))))
         );
 
         pack();
@@ -122,6 +126,11 @@ public class TelaLogin extends javax.swing.JFrame {
         TelaPrincipal Tp = new TelaPrincipal();
         Tp.setVisible(true);
         this.dispose();
+        Conexao con = new Conexao();
+      
+        
+       
+        
     }//GEN-LAST:event_BtlogarActionPerformed
 
     /**

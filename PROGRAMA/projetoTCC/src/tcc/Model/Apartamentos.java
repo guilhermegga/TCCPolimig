@@ -6,9 +6,8 @@ package tcc.Model;
 public class Apartamentos {
 
     public int codApartamento;
-    public int cnpjCondominFK;
+    public String cnpjCondominFK;
     public String numeroApart;
     public String blocoApart;
-    public String andarApart;
 
 }

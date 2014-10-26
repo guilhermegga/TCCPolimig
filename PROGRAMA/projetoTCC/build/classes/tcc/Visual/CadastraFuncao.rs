@@ -1,0 +1,2 @@
+InterfaceSistema.CadastraFuncao$1
+InterfaceSistema.CadastraFuncao

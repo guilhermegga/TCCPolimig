@@ -5,6 +5,17 @@
  */
 package tcc.visual;
 
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.ListModel;
+import tcc.Controller.CargoDAO;
+import tcc.Controller.Conexao;
+import tcc.Model.Cargo;
+
 /**
  *
  * @author rodrigo
@@ -16,10 +27,10 @@ public class CadastraFuncao extends javax.swing.JInternalFrame {
      */
     public CadastraFuncao() {
         initComponents();
-        
-        setRootPaneCheckingEnabled(false);  
-	javax.swing.plaf.InternalFrameUI ui = this.getUI();  
-	((javax.swing.plaf.basic.BasicInternalFrameUI)ui).setNorthPane(null); 
+
+        setRootPaneCheckingEnabled(false);
+        javax.swing.plaf.InternalFrameUI ui = this.getUI();
+        ((javax.swing.plaf.basic.BasicInternalFrameUI) ui).setNorthPane(null);
     }
 
     /**
@@ -36,17 +47,34 @@ public class CadastraFuncao extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         TxtNomeFuncao = new javax.swing.JTextField();
         TxtSalario = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        ListFuncoes = new javax.swing.JList();
         TxtDescricaoFuncao = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtDescricao = new javax.swing.JTextArea();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList();
 
         setPreferredSize(new java.awt.Dimension(800, 579));
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameOpened(evt);
+            }
+        });
         getContentPane().setLayout(null);
 
         LbTiuloFuncao.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
@@ -64,25 +92,14 @@ public class CadastraFuncao extends javax.swing.JInternalFrame {
         getContentPane().add(jLabel2);
         jLabel2.setBounds(30, 175, 107, 22);
         getContentPane().add(TxtNomeFuncao);
-        TxtNomeFuncao.setBounds(160, 100, 320, 27);
+        TxtNomeFuncao.setBounds(160, 100, 320, 20);
         getContentPane().add(TxtSalario);
-        TxtSalario.setBounds(160, 170, 280, 27);
+        TxtSalario.setBounds(160, 170, 280, 20);
 
-        ListFuncoes.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        ListFuncoes.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Porteiro", "Serviços Gerais", "Jardineiro", "Sindico", " " };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(ListFuncoes);
-
-        getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(540, 140, 210, 290);
-
-        jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        jTextArea1.setRows(5);
-        TxtDescricaoFuncao.setViewportView(jTextArea1);
+        txtDescricao.setColumns(20);
+        txtDescricao.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        txtDescricao.setRows(5);
+        TxtDescricaoFuncao.setViewportView(txtDescricao);
 
         getContentPane().add(TxtDescricaoFuncao);
         TxtDescricaoFuncao.setBounds(30, 280, 480, 150);
@@ -100,11 +117,17 @@ public class CadastraFuncao extends javax.swing.JInternalFrame {
         jButton1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jButton1.setText("Cancelar");
         jButton1.setPreferredSize(new java.awt.Dimension(70, 35));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton1);
         jButton1.setBounds(30, 470, 120, 35);
 
         jButton2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jButton2.setText("Editar");
+        jButton2.setEnabled(false);
         jButton2.setPreferredSize(new java.awt.Dimension(70, 35));
         getContentPane().add(jButton2);
         jButton2.setBounds(340, 470, 120, 35);
@@ -112,16 +135,135 @@ public class CadastraFuncao extends javax.swing.JInternalFrame {
         jButton3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jButton3.setText("Salvar");
         jButton3.setPreferredSize(new java.awt.Dimension(70, 35));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton3);
         jButton3.setBounds(630, 470, 120, 35);
+
+        jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jList1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jList1FocusGained(evt);
+            }
+        });
+        jList1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jList1MouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jList1);
+        Conexao conn = new Conexao();
+
+        try {
+            Cargo carg = new Cargo();
+
+            List cargoss = new ArrayList();
+
+            CargoDAO cargDAO = new CargoDAO(conn.getConexao());
+            ResultSet cargos = cargDAO.listarCargoNome();
+
+            while (cargos.next()) {
+
+                cargoss.add(cargos.getString(1));
+
+            }
+            jList1.setListData(cargoss.toArray());
+        } catch (Exception e) {
+        }
+
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(560, 150, 170, 280);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        Conexao conn = new Conexao();
+
+        Cargo carg = new Cargo();
+
+        carg.nomecargo = TxtNomeFuncao.getText();
+        carg.descCargo = txtDescricao.getText();
+        carg.salario = Double.parseDouble(TxtSalario.getText());
+
+        try {
+            CargoDAO cargDAO = new CargoDAO(conn.getConexao());
+
+            cargDAO.cadastrarCargo(carg);
+
+            JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
+        } catch (Exception e) {
+
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        jList1.grabFocus();
+        TxtNomeFuncao.setText(null);
+        txtDescricao.setText(null);
+        TxtSalario.setText(null);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+
+        Conexao conn = new Conexao();
+
+        try {
+            Cargo carg = new Cargo();
+
+            List cargoss = new ArrayList();
+
+            CargoDAO cargDAO = new CargoDAO(conn.getConexao());
+            ResultSet cargos = cargDAO.listarCargoNome();
+
+            while (cargos.next()) {
+
+                cargoss.add(cargos.getString(1));
+
+            }
+            jList1.setListData(cargoss.toArray());
+        } catch (Exception e) {
+        }
+
+
+    }//GEN-LAST:event_formInternalFrameOpened
+
+    private void jList1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jList1FocusGained
+
+        Conexao conn = new Conexao();
+
+        try {
+            Cargo carg = new Cargo();
+
+            List cargoss = new ArrayList();
+
+            CargoDAO cargDAO = new CargoDAO(conn.getConexao());
+            ResultSet cargos = cargDAO.listarCargoNome();
+
+            while (cargos.next()) {
+
+                cargoss.add(cargos.getString(1));
+
+            }
+            jList1.setListData(cargoss.toArray());
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jList1FocusGained
+
+    private void jList1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseClicked
+       
+        
+        
+    }//GEN-LAST:event_jList1MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel LbTiuloFuncao;
-    private javax.swing.JList ListFuncoes;
     private javax.swing.JScrollPane TxtDescricaoFuncao;
     private javax.swing.JTextField TxtNomeFuncao;
     private javax.swing.JTextField TxtSalario;
@@ -132,7 +274,8 @@ public class CadastraFuncao extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JList jList1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea txtDescricao;
     // End of variables declaration//GEN-END:variables
 }
